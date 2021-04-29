@@ -5,6 +5,7 @@
 #include <cinttypes>
 
 #include "wasm.hh"
+#include "v8.h"
 
 // Print a Wasm value
 auto operator<<(std::ostream& out, const wasm::Val& val) -> std::ostream& {
@@ -58,6 +59,7 @@ auto closure_callback(
 void run() {
   // Initialize.
   std::cout << "Initializing..." << std::endl;
+  v8::V8::EnableWebAssemblyTrapHandler(true);
   auto engine = wasm::Engine::make();
   auto store_ = wasm::Store::make(engine.get());
   auto store = store_.get();
